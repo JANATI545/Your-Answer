@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Your Answer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#2b0a1f;
+    --wine-deep:#1a0512;
+    --blush:#ffb6c1;
+    --rose:#ff4d6d;
+    --gold:#e5b94e;
+    --cream:#fdf3e7;
+    --shadow: 0 20px 60px rgba(0,0,0,.45);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+ html,body{
+  
+    height:100%;
+    overflow-x:hidden;
+    background:var(--wine-deep);
+    color:var(--cream);
+    font-family:'Poppins', sans-serif;
+}
+  .scene{
+    height:100vh;
+    height:100dvh;
+    width:100%;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:6vh 6vw;
+    overflow:hidden;
+  }
+  .scene::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(
+        rgba(26,5,18,.75),
+        rgba(26,5,18,.85)
+      ),
+      url("wedding-bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+    filter:blur(1px);
+    transform:scale(1.05);
+
+    z-index:0;
+}
+  .scene.active{display:flex;}
+
+  /* floating hearts ambiance */
+  .hearts-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+  .hearts-bg span{
+    position:absolute;bottom:-10%;
+    font-size:1.4rem;opacity:.18;
+    animation:float 14s linear infinite;
+    color:var(--rose);
+  }
+  @keyframes float{
+    to{ transform:translateY(-120vh) rotate(20deg); opacity:0;}
+  }
+
+  h1,h2,h3{font-family:'Playfair Display', serif;}
+
+  .eyebrow{
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    font-size:.7rem;
+    color:var(--gold);
+    margin-bottom:1.2rem;
+    font-weight:600;
+    z-index:1;
+  }
+
+  /* ===== SCENE 1 ===== */
+  #scene1 h1{
+    font-size:clamp(2.2rem, 7vw, 4.5rem);
+    font-weight:900;
+    font-style:italic;
+    line-height:1.15;
+    max-width:14ch;
+    background:linear-gradient(180deg, var(--cream), var(--blush));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    z-index:1;
+    text-shadow: 0 0 60px rgba(255,182,193,.25);
+  }
+  #scene1 p.sub{
+    margin-top:1.4rem;
+    color:rgba(253,243,231,.75);
+    font-size:clamp(1rem,2.2vw,1.15rem);
+    max-width:32ch;
+    z-index:1;
+  }
+
+  @keyframes pulseRing{
+    0%,100%{transform:scale(1) rotate(0deg);}
+    50%{transform:scale(1.12) rotate(-8deg);}
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn{
+  z-index:2;
+  margin-top:3rem;
+  padding:1rem 2.6rem;
+  border-radius:50px;
+
+  border:1.5px solid rgba(229,185,78,.7);
+  background:transparent;
+  color:var(--gold);
+
+  backdrop-filter:blur(6px);
+
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
+  font-size:1rem;
+  letter-spacing:.05em;
+
+  cursor:pointer;
+  transition:.25s ease;
+
+  box-shadow:0 8px 25px rgba(229,185,78,.15);
+
+  position:relative;
+  overflow:hidden;
+}
+
+
+.btn:hover{
+  background:rgba(229,185,78,.15);
+  color:var(--cream);
+  border-color:var(--gold);
+
+  transform:translateY(-4px) scale(1.03);
+
+  box-shadow:
+  0 12px 35px rgba(229,185,78,.3);
+}
+
+
+/* ✨ decoration */
+.btn::before{
+  content:"✨";
+  position:absolute;
+  left:15px;
+  opacity:.8;
+}
+
+
+.btn::after{
+  content:"✨";
+  position:absolute;
+  right:15px;
+  opacity:.8;
+}
+  .btn.solid{
+    background:var(--rose);
+    border-color:var(--rose);
+    color:var(--cream);
+  }
+  .btn.solid:hover{
+    background:#ff6b86;
+    box-shadow:0 12px 30px rgba(255,77,109,.4);
+  }
+
+  .dots{
+    position:absolute;
+    bottom:5vh;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+    z-index:2;
+  }
+  .dots span{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(253,243,231,.25);
+  }
+  .dots span.on{background:var(--gold);}
+
+  /* ===== SCENE 2 : reasons ===== */
+  #scene2 h2{
+    font-size:clamp(1.8rem,5vw,3rem);
+    font-weight:700;
+    max-width:16ch;
+    z-index:1;
+    margin-bottom:2.4rem;
+  }
+  .reasons{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    z-index:1;
+    max-width:480px;
+    width:100%;
+  }
+  .reason{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    background:rgba(253,243,231,.06);
+    border:1px solid rgba(229,185,78,.25);
+    padding:1rem 1.2rem;
+    border-radius:16px;
+    text-align:left;
+    opacity:0;
+    transform:translateY(14px);
+    animation:riseIn .6s ease forwards;
+  }
+  .reason:nth-child(1){animation-delay:.1s;}
+  .reason:nth-child(2){animation-delay:.35s;}
+  .reason:nth-child(3){animation-delay:.6s;}
+  .reason:nth-child(4){animation-delay:.85s;}
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
+  .reason .emo{font-size:1.6rem;flex-shrink:0;}
+  .reason p{font-size:.95rem;color:rgba(253,243,231,.85);line-height:1.4;}
+  .reason b{color:var(--gold);}
+
+  /* ===== SCENE 3 : final proposal ===== */
+  #scene3 h2{
+    font-size:clamp(2rem,6vw,3.6rem);
+    font-weight:900;
+    font-style:italic;
+    z-index:2;
+    margin-bottom:.6rem;
+  }
+  #scene3 .sub3{
+    color:rgba(253,243,231,.7);
+    font-size:.95rem;
+    z-index:2;
+    margin-bottom:3vh;
+  }
+
+  .altar{
+    position:relative;
+    width:100%;
+    max-width:520px;
+    height:26vh;
+    min-height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+  }
+.hand{
+  position:absolute;
+  width:150px;
+  height:150px;
+  z-index:2;
+
+  filter:
+  drop-shadow(0 15px 25px rgba(0,0,0,.45));
+
+  transition:
+  transform 1.3s cubic-bezier(.22,1,.36,1),
+  filter .5s;
+}
+
+
+.hand img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+
+/* left hand */
+
+.hand.left{
+
+  left:0;
+
+  transform:
+  translateX(0)
+  rotate(-8deg);
+
+}
+
+
+/* right hand */
+
+.hand.right{
+
+  right:0;
+
+  transform:
+  translateX(0)
+  rotate(8deg);
+
+}
+
+
+
+/* when they meet */
+
+.altar.meet .hand.left{
+
+  transform:
+  translateX(55%)
+  rotate(-3deg)
+  scale(1.05);
+
+}
+
+
+.altar.meet .hand.right{
+
+  transform:
+  translateX(-55%)
+  rotate(3deg)
+  scale(1.05);
+
+}
+
+
+
+/* little glow after meeting */
+
+.altar.meet .hand img{
+
+  animation:
+  handGlow 2s infinite ease-in-out;
+
+}
+
+
+
+@keyframes handGlow{
+
+  0%,100%{
+    filter:brightness(1);
+  }
+
+  50%{
+    filter:
+    brightness(1.15)
+    drop-shadow(0 0 20px rgba(255,182,193,.8));
+  }
+
+}
+  .altar.meet .hand.left{ transform:translateX(38%) rotate(-4deg) scaleX(-1); }
+  .altar.meet .hand.right{ transform:translateX(-38%) rotate(4deg); }
+
+.ring-drop{
+  position:absolute;
+  top:-14vh;
+  opacity:0;
+  z-index:3;
+
+  width:80px;
+  height:80px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:
+  top 1s cubic-bezier(.34,1.56,.64,1) .9s,
+  opacity .4s .9s;
+}
+
+
+.ring-drop img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+
+  filter:
+  drop-shadow(0 10px 20px rgba(229,185,78,.6));
+
+  animation:ringGlow 2s infinite ease-in-out;
+}
+
+
+
+@keyframes ringGlow{
+
+  0%,100%{
+    transform:scale(1) rotate(-5deg);
+  }
+
+  50%{
+    transform:scale(1.15) rotate(5deg);
+  }
+
+}
+
+
+
+.altar.meet .ring-drop{
+
+  top:38%;
+  opacity:1;
+
+  animation:
+  ringAppear 1.2s cubic-bezier(.34,1.56,.64,1);
+
+}
+
+
+
+@keyframes ringAppear{
+
+  0%{
+    transform:translateY(-80px) scale(.2);
+    opacity:0;
+  }
+
+  60%{
+    transform:translateY(10px) scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    transform:translateY(0) scale(1);
+  }
+
+}
+  .altar.meet .ring-drop{
+    top:38%;
+    opacity:1;
+  }
+
+  .choices{
+    z-index:5;
+    margin-top:4vh;
+    display:flex;
+    gap:1.4rem;
+    position:relative;
+    height:70px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+  }
+  #noBtn{
+    position:relative;
+    transition: transform .18s ease-out;
+  }
+
+  .result{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    z-index:6;
+    margin-top:2vh;
+  }
+  .result.show{display:flex;}
+  .result h3{
+    font-size:clamp(1.6rem,5vw,2.6rem);
+    color:var(--gold);
+    margin-bottom:.6rem;
+  }
+  .result p{color:rgba(253,243,231,.8);max-width:30ch;}
+
+  .fu{
+    display:none;
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:900;
+    font-size:clamp(1.8rem,7vw,3rem);
+    color:var(--rose);
+    margin-top:2rem;
+    z-index:6;
+    animation:shake .4s ease;
+  }
+  .fu.show{display:block;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-10px) rotate(-2deg);}
+    40%{transform:translateX(10px) rotate(2deg);}
+    60%{transform:translateX(-6px);}
+    80%{transform:translateX(6px);}
+  }
+
+  /* confetti */
+  .confetti{
+    position:fixed;
+    top:-10px;
+    width:8px;height:14px;
+    z-index:50;
+    opacity:.9;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform:translateY(110vh) rotate(540deg); opacity:0;}
+  }
+
+  @media (max-width:480px){
+    .scene{padding:5vh 5vw;}
+    .altar{height:22vh;}
+  }
+#party{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:0;
+  width:100%;
+  transform:translateY(-50%);
+  z-index:100;
+  pointer-events:none;
+}
+
+#party.active{
+  display:block;
+}
+
+
+.dancer{
+  position:absolute;
+  font-size:60px;
+  animation:dance 0.7s infinite alternate;
+}
+
+
+/* LEFT SIDE */
+.left1{
+  left:30px;
+  animation-delay:0s;
+}
+
+.left2{
+  left:100px;
+  animation-delay:.3s;
+}
+
+
+/* RIGHT SIDE */
+.right1{
+  right:100px;
+  animation-delay:.15s;
+}
+
+.right2{
+  right:30px;
+  animation-delay:.45s;
+}
+
+
+@keyframes dance{
+
+  from{
+    transform:translateY(0) rotate(-12deg);
+  }
+
+  to{
+    transform:translateY(-35px) rotate(12deg);
+  }
+
+}
+
+
+#party.active{
+  display:block;
+}
+
+
+.left-dancers,
+.right-dancers{
+  position:absolute;
+  font-size:55px;
+  display:flex;
+  gap:20px;
+  animation:danceSide .7s infinite alternate;
+}
+
+
+.left-dancers{
+  left:30px;
+}
+
+
+.right-dancers{
+  right:30px;
+}
+
+
+.right-dancers,
+.left-dancers{
+  animation-delay:.2s;
+}
+
+
+@keyframes danceSide{
+
+  from{
+    transform:translateY(0) rotate(-8deg);
+  }
+
+  to{
+    transform:translateY(-25px) rotate(8deg);
+  }
+
+}
+
+#party.active{
+  display:flex;
+}
+
+
+#party div{
+  animation: dance .5s infinite alternate;
+}
+
+
+#party div:nth-child(even){
+  animation-delay:.25s;
+}
+
+
+@keyframes dance{
+  from{
+    transform:translateY(0) rotate(-10deg);
+  }
+
+  to{
+    transform:translateY(-35px) rotate(10deg);
+  }
+}
+.party-btn{
+  background:transparent;
+  border:1.5px solid rgba(229,185,78,.7);
+  color:var(--gold);
+  backdrop-filter:blur(6px);
+  padding:1rem 2.6rem;
+  margin-top:2rem;
+  box-shadow:0 8px 25px rgba(229,185,78,.15);
+}
+
+
+.party-btn:hover{
+  background:rgba(229,185,78,.15);
+  color:var(--cream);
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(229,185,78,.35);
+}
+
+
+.party-btn:hover{
+  background:rgba(255,182,193,0.15);
+  color:var(--cream);
+  border-color:var(--gold);
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 12px 35px rgba(255,182,193,.3);
+}
+
+
+/* cute little shine */
+.party-btn::before{
+  content:"✨";
+  position:absolute;
+  left:15px;
+  opacity:.8;
+}
+
+
+.party-btn::after{
+  content:"✨";
+  position:absolute;
+  right:15px;
+  opacity:.8;
+}
+@media(max-width:480px){
+
+.scene{
+ padding:4vh 5vw;
+}
+
+#scene3 h2{
+ font-size:1.8rem;
+}
+
+.sub3{
+ font-size:.85rem;
+}
+
+.altar{
+ height:20vh;
+ min-height:120px;
+}
+
+.hand{
+ width:95px;
+ height:95px;
+}
+
+
+.choices{
+ gap:.7rem;
+ flex-direction:column;
+ height:auto;
+}
+
+
+.btn{
+ width:90%;
+ font-size:.9rem;
+ padding:.9rem 1.5rem;
+}
+
+#party .dancer{
+ font-size:40px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music1" loop>
+  <source src="music1.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="music2">
+  <source src="music2.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="music3" loop>
+  <source src="music3.mp3" type="audio/mpeg">
+</audio>
+
+<div id="party">
+
+  <div class="dancer left1">💃</div>
+  <div class="dancer left2">🕺</div>
+
+  <div class="dancer right1">👰</div>
+  <div class="dancer right2">🤵</div>
+
+</div>
+
+<!-- ===================== SCENE 1 ===================== -->
+<section class="scene active" id="scene1">
+  <div class="hearts-bg" id="hearts1"></div>
+<div class="eyebrow">واحد الحاجة مهمة 👀</div>
+
+<h1>
+واش نقدر ناخد منك دقيقة؟ 
+</h1>
+
+<p class="sub">
+ما تخافش... ماشي مشكل كبير 😌  
+غير عندي واحد السؤال خطير شوية 
+</p>
+
+
+<button class="btn party-btn" onclick="partyStart()">
+تكي هنا لطفو لأجواء شويا
+</button>
+<button class="btn" onclick="goTo(2)">
+ تعلا تشوف اش كاين ->🙊  
+</button>
+
+  <div class="dots"><span class="on"></span><span></span><span></span></div>
+</section>
+
+<!-- ===================== SCENE 2 ===================== -->
+<section class="scene" id="scene2">
+  <div class="hearts-bg" id="hearts2"></div>
+<div class="eyebrow">قبل السؤال الكبير 😌</div>
+
+<h2>
+علاش نت شخص مميز عندي 🙈
+</h2>
+
+<div class="reasons">
+
+<div class="reason">
+<span class="emo">🥺</span>
+<p>
+<b>حيت كتضحكني</b>
+حتى فالنهار اللي ما عنديش فيه المود 🥺
+</p>
+</div>
+
+
+<div class="reason">
+<span class="emo">😝</span>
+<p>
+<b>حيت معاك</b>
+حتى المشاكل كتبان صغيييرة 😝
+</p>
+</div>
+
+
+<div class="reason">
+<span class="emo">❤️</span>
+<p>
+<b>حيت وجودك</b>
+كيخلي أي نهار أحسن ❤️
+</p>
+</div>
+
+
+<div class="reason">
+<span class="emo">☻️</span>
+<p>
+<b>ودابا...</b>
+جا الوقت نسولك واحد السؤال 👀
+</p>
+</div>
+
+</div>
+
+
+<button class="btn" style="margin-top:2.4rem;" onclick="goTo(3)">
+يلا نشوفو 👄 →
+</button>
+  <div class="dots"><span></span><span class="on"></span><span></span></div>
+</section>
+
+<!-- ===================== SCENE 3 ===================== -->
+<section class="scene" id="scene3">
+
+  <div class="hearts-bg" id="hearts3"></div>
+
+  <div class="eyebrow">
+    اللحظة الكبيرة 😳💍
+  </div>
+
+
+  <h2>
+    واش تقبل بيا كيتك ماشي بيا زعما واش ندربو شي فشي ونجمعو كلشي ااا؟ ❤️💍
+  </h2>
+
+
+  <p class="sub3">
+   تعورها نفرع مك 😑
+  </p>
+
+
+  <div class="altar" id="altar">
+
+<div class="hand left">
+  <img src="hand_left_boy.png" alt="Left Hand">
+</div>
+
+<div class="hand right">
+  <img src="hand_right_girl.png" alt="Right Hand">
+</div>
+
+   <div class="ring-drop">
+  <img src="ringg.png" alt="Wedding Ring">
+</div>
+
+  </div>
+
+
+  <div class="choices" id="choices">
+
+    <button class="btn " id="yesBtn" onclick="sayYes()">
+      واخا 😍
+    </button>
+
+
+  <button class="btn" id="noBtn" onclick="sayNo()">
+  لا 
+</button>
+
+  </div>
+
+
+  <div class="result" id="result">
+
+    <h3>
+    ههه عقت بيك قبلتي يالله هاك بيسا👄😘
+    </h3>
+
+
+    <p>
+      كنت عارف الجواب من الأول 😂  
+      ولكن خاصني نسمعو منك 🎉❤️
+    </p>
+
+  </div>
+
+
+  <div class="fu" id="fu">
+   اوا فاك يو كيتك بكواوي تلقى محسن مني🤬🤬
+  </div>
+
+
+</section>
+
+<script>
+  function goTo(n){
+    document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+    document.getElementById('scene'+n).classList.add('active');
+  }
+function startMusic(){
+
+  let music1 = document.getElementById("music1");
+
+  music1.volume = 0.35;
+  music1.play();
+
+}
+  // floating hearts background
+  const heartsEmojis = ['💗','💕','🤍','💫','💍'];
+  document.querySelectorAll('.hearts-bg').forEach(container=>{
+    for(let i=0;i<10;i++){
+      const s = document.createElement('span');
+      s.textContent = heartsEmojis[Math.floor(Math.random()*heartsEmojis.length)];
+      s.style.left = Math.random()*100+'%';
+      s.style.animationDuration = (10+Math.random()*10)+'s';
+      s.style.animationDelay = (Math.random()*10)+'s';
+      s.style.fontSize = (1+Math.random()*1.4)+'rem';
+      container.appendChild(s);
+    }
+  });
+
+  // dodge logic for "Non"
+  let dodgeCount = 0;
+  function dodge(){
+    const btn = document.getElementById('noBtn');
+    const choices = document.getElementById('choices');
+    const rect = choices.getBoundingClientRect();
+    dodgeCount++;
+    // after a few dodges, let it get harder to reach but still catchable on click for mobile
+    const maxX = rect.width/2 - 40;
+    const x = (Math.random()-0.5)*2*maxX;
+    const y = (Math.random()-0.5)*40;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+function sayNo(){
+
+  const msg = document.getElementById('fu');
+
+  msg.classList.add('show');
+
+  msg.style.animation = 'none';
+  void msg.offsetWidth;
+  msg.style.animation = 'shake .4s ease';
+
+}
+
+function sayYes(){
+  document.getElementById('fu').classList.remove('show');
+
+  document.getElementById('altar')
+  .classList.add('meet');
+  document.getElementById('altar')
+  .classList.add('meet');
+
+  document.getElementById('choices')
+  .style.display = 'none';
+
+
+  let music1 = document.getElementById("music1");
+  let music2 = document.getElementById("music2");
+  let music3 = document.getElementById("music3");
+
+
+  // stop music 1
+  music1.pause();
+  music1.currentTime = 0;
+
+
+  // music 2 après 2 secondes
+  setTimeout(()=>{
+
+    music2.volume = 0.25;
+    music2.play();
+
+  },2000);
+
+
+
+  // quand music2 termine
+  music2.onended = function(){
+
+    music3.volume = 0.25;
+    music3.play();
+
+  };
+
+
+  setTimeout(()=>{
+
+    document.getElementById('result')
+    .classList.add('show');
+
+    launchConfetti();
+
+  },1500);
+
+}
+
+  function launchConfetti(){
+    const colors = ['#ff4d6d','#e5b94e','#fdf3e7','#ffb6c1'];
+    for(let i=0;i<80;i++){
+      const c = document.createElement('div');
+      c.className='confetti';
+      c.style.left = Math.random()*100+'vw';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2.5+Math.random()*2)+'s';
+      c.style.borderRadius = Math.random()>0.5 ? '50%':'2px';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 5000);
+    }
+  }
+  document.addEventListener("click", function(){
+    let music1 = document.getElementById("music1");
+
+    if(music1.paused){
+        music1.volume = 0.35;
+        music1.play();
+    }
+
+},{once:true});
+function partyStart(){
+
+  let music1 = document.getElementById("music1");
+
+  music1.volume = 0.35;
+  music1.play();
+
+
+  document.getElementById("party")
+  .classList.add("active");
+
+}
+</script>
+</body>
+</html>
